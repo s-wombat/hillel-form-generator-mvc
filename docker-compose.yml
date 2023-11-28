@@ -1,0 +1,28 @@
+version: '3.8'
+
+services:
+  php:
+    build:
+      context: ./docker/php
+    volumes:
+      - ".:/var/www/html"
+    ports:
+      - "9000:9000"
+    container_name: ${PROJECT_NAME}_php
+
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ".:/var/www/html"
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    container_name: ${PROJECT_NAME}_nginx
+
+#  composer:
+#    image: composer
+#    volumes:
+#      - ".:/app"
+#    container_name: ${PROJECT_NAME}_composer
